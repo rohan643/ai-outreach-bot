@@ -1,0 +1,49 @@
+sequences:
+  cold_outreach:
+    touches:
+      - day: 0
+        channel: email
+        template: intro
+        ai_personalized: true
+      - day: 3
+        channel: email
+        template: social_proof
+      - day: 7
+        channel: email
+        template: different_angle
+      - day: 14
+        channel: linkedin
+        template: connect_note
+      - day: 17
+        channel: linkedin
+        template: message
+
+reply_routing:
+  INTERESTED:
+    action: book_meeting
+    tool: calendly
+    notify: slack
+  NOT_NOW:
+    action: snooze
+    snooze_days: 45
+    re_enroll_sequence: cold_outreach
+  UNSUBSCRIBE:
+    action: dnc
+    remove_from_all: true
+  OOO:
+    action: pause
+    resume_on_return: true
+  OBJECTION:
+    action: draft_response
+    requires_human_review: true
+
+sending_limits:
+  emails_per_day: 150
+  linkedin_connects_per_day: 25
+  min_send_delay_seconds: 90
+  randomize_delay: true
+
+ai:
+  model: gpt-4o
+  temperature: 0.85
+  max_tokens: 300

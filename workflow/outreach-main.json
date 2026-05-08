@@ -1,0 +1,105 @@
+{
+  "name": "AI Outreach Bot \u2014 Lead Intake",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Airtable Trigger",
+      "type": "n8n-nodes-base.airtableTrigger",
+      "position": [
+        200,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "2",
+      "name": "Gather Intel",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        400,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "3",
+      "name": "GPT-4o Write Email",
+      "type": "n8n-nodes-base.openAi",
+      "position": [
+        600,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "4",
+      "name": "Send via Instantly",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        800,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "5",
+      "name": "Log to Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "position": [
+        1000,
+        300
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "Gather Intel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gather Intel": {
+      "main": [
+        [
+          {
+            "node": "GPT-4o Write Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-4o Write Email": {
+      "main": [
+        [
+          {
+            "node": "Send via Instantly",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send via Instantly": {
+      "main": [
+        [
+          {
+            "node": "Log to Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b8c9d0e1-f2a3-4567-1234-890123456789"
+}
